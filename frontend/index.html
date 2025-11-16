@@ -7,6 +7,7 @@
   <title>Intelligent Storage System</title>
   <meta name="description" content="Upload your files with ease using our modern, minimalist file upload tool">
   <link rel="stylesheet" href="styles.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@
     <!-- Title - Widest -->
     <div class="title-container">
       <h1 class="title">Intelligent Storage System</h1>
+      <p class="tagline">Smart Storage Meets Smart Structure.</p>
     </div>
 
     <!-- Upload Area - Medium Width -->
@@ -38,7 +40,7 @@
             <p class="or-text">or</p>
 
             <div class="button-group">
-              <button id="browseBtn" class="btn btn-outline">
+              <button title="Select a file from your computer" id="browseBtn" class="btn btn-outline">
                 <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                   fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -48,7 +50,7 @@
                 Browse Files
               </button>
 
-              <button id="uploadBtn" class="btn btn-primary" disabled>
+              <button title="Upload the selected file" id="uploadBtn" class="btn btn-primary" disabled>
                 <svg id="uploadBtnIcon" class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                   viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                   stroke-linejoin="round">
@@ -65,12 +67,13 @@
         </div>
       </div>
     </div>
+
     <div id="resultsContainer" class="results-container" style="display: none;">
       <div class="results-card">
         <div class="results-content">
           <div class="success-icon">
-            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
               <path d="M14 2v4a2 2 0 0 0 2 2h4" />
               <path d="m9 15 2 2 4-4" />
@@ -98,6 +101,7 @@
         </div>
       </div>
     </div>
+
     <!-- Switch to JSON Upload -->
     <div class="json-switch">
       <button id="showJsonBtn" class="btn btn-outline">Upload JSON instead?</button>
@@ -107,11 +111,8 @@
       <a href="json_explorer.html" class="btn btn-outline" style="margin-left: 1rem;">📄 Open JSON Explorer</a>
     </div>
 
-
-
     <!-- JSON Upload Section (Initially Hidden) -->
     <div id="jsonUploadSection" class="json-upload-container" style="display:none;">
-
       <div class="upload-card">
         <h2 class="json-title">Upload JSON Data</h2>
 
@@ -137,10 +138,13 @@
       </div>
 
     </div>
-
-
     <!-- Results Area - Narrowest -->
   </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    © 2025 Intelligent Storage System | Designed by Cyber JAM
+  </footer>
 
   <script src="script.js"></script>
 </body>
