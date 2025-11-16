@@ -1,3 +1,5 @@
+/* styles.css - Final Merged Version */
+
 * {
   margin: 0;
   padding: 0;
@@ -33,30 +35,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   padding: 3rem 1rem;
 }
-.results-container {
-  margin-top: 1.5rem;
-}
-.search-box {
-  height: 2.5rem;
-  padding: 0 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border);
-  background: var(--card);
-  font-size: 0.9rem;
-  width: 14rem;
-  outline: none;
-  transition: all 0.2s ease;
-}
 
-.search-box:focus {
-  border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Title Section */
+/* --- Title Section --- */
 .title-container {
   width: 100%;
   max-width: 80rem;
@@ -72,18 +54,34 @@ body {
   white-space: nowrap;
 }
 
-/* Upload Section */
-.upload-container {
+.tagline {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: hsl(0, 0%, 45%);
+  text-align: center;
+  margin-top: 0.8rem;
+}
+
+/* --- Upload / JSON Section --- */
+.upload-container,
+.json-upload-container {
   width: 100%;
   max-width: 48rem;
   margin-bottom: 2rem;
 }
 
 .upload-card {
-  background-color: var(--card);
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 1.5rem;
   box-shadow: var(--shadow-xl);
   padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.upload-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
 }
 
 .drop-zone {
@@ -175,16 +173,11 @@ body {
   opacity: 0.5;
 }
 
-.btn-icon {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-}
-
 .btn-primary {
   background-color: var(--primary);
   color: var(--primary-foreground);
   box-shadow: var(--shadow-md);
+  text-shadow: 0 0 6px rgba(33,150,243,0.5);
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -201,7 +194,7 @@ body {
 
 .btn-outline:hover {
   background-color: hsl(217, 91%, 60%);
-  color: hsl(0, 0%, 100%);
+  color: hsl(0,0%,100%);
   box-shadow: var(--shadow-md);
 }
 
@@ -209,20 +202,7 @@ body {
   display: none;
 }
 
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Results Section */
+/* --- Results Section --- */
 .results-container {
   width: 100%;
   max-width: 32rem;
@@ -230,10 +210,17 @@ body {
 
 .results-card {
   padding: 1.5rem;
-  background-color: var(--card);
+  background-color: rgba(255,255,255,0.85);
   border-radius: 1rem;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.results-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
 }
 
 .results-content {
@@ -246,7 +233,7 @@ body {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
-  background-color: hsla(217, 91%, 60%, 0.1);
+  background-color: hsla(217,91%,60%,0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,124 +246,13 @@ body {
   color: var(--primary);
 }
 
-.results-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.results-title {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--foreground);
-  margin-bottom: 0.25rem;
-}
-
-.results-filename {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  margin-bottom: 0.75rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.view-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--primary);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.view-link:hover {
-  color: hsl(217, 91%, 48%);
-}
-
-.arrow {
-  font-size: 0.75rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .title {
-    font-size: 2rem;
-    white-space: normal;
-  }
-
-  .upload-card {
-    padding: 1.5rem;
-  }
-
-  .drop-zone-content {
-    padding: 2rem;
-  }
-
-  .button-group {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-  }
-}
-
-/* --- Collapsible Details --- */
-.details-container {
-  margin-top: 0.75rem;
-}
-
-.details-toggle {
-  background: none;
-  border: none;
-  color: var(--primary);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 0.5rem;
-  transition: color 0.2s ease;
-}
-
-.details-toggle:hover {
-  color: hsl(217, 91%, 48%);
-}
-
-.details-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease-out;
-}
-
-.details-content.open {
-  max-height: 500px; /* enough for 10+ items */
-}
-
-.details-list {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.details-list li {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  margin-bottom: 0.25rem;
-}
-
-
-.json-switch {
-  text-align: center;
-  margin-top: 1rem;
-}
-
+/* --- JSON Upload --- */
 .json-upload-container {
   width: 100%;
   max-width: 48rem;
-  margin-top: 2rem;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .json-title {
@@ -399,177 +275,125 @@ body {
   font-size: 0.9rem;
 }
 
-/* ---------- File Explorer ---------- */
-.explorer-container {
-  width: 100%;
-  max-width: 80rem;
-}
-
-.explorer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.explorer-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.explorer-layout {
-  display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 1.5rem;
-}
-
-.folder-tree {
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background-color: var(--muted);
-  padding: 1rem;
-  max-height: 480px;
-  overflow-y: auto;
-}
-
-.folder-group-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.folder-item {
-  margin-bottom: 0.25rem;
-}
-
-.folder-button {
-  width: 100%;
-  text-align: left;
-  background: none;
+#uploadJsonBtn {
+  background-color: hsl(217,91%,60%);
+  color: hsl(0,0%,100%);
   border: none;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.7rem 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  transition: all 0.2s ease;
+  text-shadow: 0 0 5px rgba(33,150,243,0.4);
+  margin-top: 0.3rem;
+}
+
+#uploadJsonBtn:hover {
+  background-color: hsl(0,0%,100%);
+  color: hsl(217,91%,60%);
+  border: 1px solid hsl(217,91%,60%);
+  box-shadow: 0 0 8px hsl(217,91%,60%);
+}
+
+/* --- Footer --- */
+.footer {
+  margin-top: 4rem;
+  text-align: center;
   font-size: 0.875rem;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  cursor: pointer;
-  color: var(--foreground);
+  color: hsl(0,0%,45%);
+  padding: 1rem 0;
 }
 
-.folder-button:hover {
-  background-color: hsla(217, 91%, 60%, 0.08);
-}
-
-.folder-button.active {
-  background-color: hsla(217, 91%, 60%, 0.15);
-}
-
-.folder-icon {
-  font-size: 1rem;
-}
-
-.subfolder-list {
-  margin-left: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-/* Table */
-.file-table-wrapper {
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background-color: var(--card);
-}
-
-.file-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.file-table thead {
-  background-color: var(--muted);
-}
-
-.file-table th,
-.file-table td {
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-.file-table th {
-  font-weight: 600;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted-foreground);
-}
-
-.file-name-cell {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.file-icon {
-  font-size: 1rem;
-}
-
-.file-actions {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.file-action-btn {
-  border: none;
-  background: none;
-  font-size: 0.8rem;
-  cursor: pointer;
+.footer a {
   color: var(--primary);
+  text-decoration: none;
 }
 
-.file-action-btn:hover {
+.footer a:hover {
   text-decoration: underline;
 }
 
+/* --- Success Title Icon --- */
+.results-title::after {
+  content: " 🗄️";
+  display: inline-block;
+  margin-left: 0.25rem;
+}
+
+/* --- Tooltips for buttons --- */
+button[title] {
+  position: relative;
+  cursor: pointer;
+}
+
+button[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: hsl(0,0%,12%);
+  color: hsl(0,0%,100%);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+/* --- Section separators --- */
+.upload-container,
+.json-upload-container,
 .nav-buttons {
-  margin-top: 1.5rem;
-  text-align: center;
-}
-.nav-buttons .btn {
-  font-size: 0.95rem;
-  padding: 0.7rem 2rem;
-}
-
-.search-input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  font-size: 1rem;
-  background: var(--muted);
-}
-
-.json-viewer {
+  border-top: 1px solid hsl(0,0%,90%);
+  padding-top: 2rem;
   margin-top: 2rem;
-  padding: 1.5rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-lg);
 }
 
-.json-output {
-  background: #1e1e1e;
-  color: #dcdcdc;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  max-height: 500px;
-  overflow: auto;
-  font-size: 0.95rem;
-  line-height: 1.4;
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+    white-space: normal;
+  }
+
+  .upload-card,
+  .json-upload-container {
+    padding: 1.5rem;
+  }
+
+  .drop-zone-content {
+    padding: 2rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .footer {
+    font-size: 0.75rem;
+  }
 }
 
+@media (max-width: 480px) {
+  .json-upload-container .upload-card {
+    padding: 1rem 0.5rem;
+  }
 
+  #uploadJsonBtn {
+    font-size: 0.95rem;
+  }
+}
