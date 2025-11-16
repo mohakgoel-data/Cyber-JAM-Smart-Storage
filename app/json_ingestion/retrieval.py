@@ -18,7 +18,6 @@ def retrieve_sql_dataset(db: Session, table_name: str) -> List[Dict]:
     rows = result.fetchall()
     columns = result.keys()
 
-    # Convert rows into list of dicts
     return [dict(zip(columns, row)) for row in rows]
 
 
@@ -30,5 +29,5 @@ def retrieve_nosql_dataset(collection_name: str) -> List[Dict]:
     db = client[MONGO_DB]
     collection = db[collection_name]
 
-    docs = list(collection.find({}, {"_id": 0}))  # remove MongoDB _id field
+    docs = list(collection.find({}, {"_id": 0})) 
     return docs
