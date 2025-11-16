@@ -1,11 +1,7 @@
 fastapi
 uvicorn[standard]
-pydantic
-sqlalchemy
 minio
+sqlalchemy
+pydantic
 python-multipart
 pymongo
-pandas
-numpy
-scikit-learn
-requests
