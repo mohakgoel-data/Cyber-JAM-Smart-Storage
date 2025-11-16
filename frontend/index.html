@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intelligent Storage System</title>
+  <meta name="description" content="Upload your files with ease using our modern, minimalist file upload tool">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Title - Widest -->
+    <div class="title-container">
+      <h1 class="title">Intelligent Storage System</h1>
+    </div>
+
+    <!-- Upload Area - Medium Width -->
+    <div class="upload-container">
+      <div class="upload-card">
+        <!-- Drag and Drop Area -->
+        <div id="dropZone" class="drop-zone">
+          <div class="drop-zone-content">
+            <div id="uploadIcon" class="upload-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                <path d="M12 12v9" />
+                <path d="m16 16-4-4-4 4" />
+              </svg>
+            </div>
+
+            <p id="fileNameDisplay" class="file-name">Drag and drop your file here</p>
+            <p class="or-text">or</p>
+
+            <div class="button-group">
+              <button id="browseBtn" class="btn btn-outline">
+                <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" x2="12" y1="3" y2="15" />
+                </svg>
+                Browse Files
+              </button>
+
+              <button id="uploadBtn" class="btn btn-primary" disabled>
+                <svg id="uploadBtnIcon" class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="17 8 12 3 7 8" />
+                  <line x1="12" x2="12" y1="3" y2="15" />
+                </svg>
+                <span id="uploadBtnText">Upload</span>
+              </button>
+            </div>
+
+            <input type="file" id="fileInput" class="file-input">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="resultsContainer" class="results-container" style="display: none;">
+      <div class="results-card">
+        <div class="results-content">
+          <div class="success-icon">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+              <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+              <path d="m9 15 2 2 4-4" />
+            </svg>
+          </div>
+          <div class="results-info">
+            <p class="results-title">Upload Complete</p>
+            <p id="uploadedFileName" class="results-filename"></p>
+            <a id="viewFileLink" href="#" target="_blank" rel="noopener noreferrer" class="view-link">
+              View File
+              <span class="arrow">→</span>
+            </a>
+            <!-- Collapsible Metadata -->
+            <div class="details-container">
+              <button id="detailsToggle" class="details-toggle">Details ▼</button>
+              <div id="detailsContent" class="details-content">
+                <ul class="details-list">
+                  <li><strong>Stored As:</strong> <span id="metaStoredAs"></span></li>
+                  <li><strong>Category:</strong> <span id="metaCategory"></span></li>
+                  <li><strong>File ID:</strong> <span id="metaFileId"></span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Switch to JSON Upload -->
+    <div class="json-switch">
+      <button id="showJsonBtn" class="btn btn-outline">Upload JSON instead?</button>
+    </div>
+    <div class="nav-buttons">
+      <a href="file_explorer.html" class="btn btn-outline">📁 Open File Explorer</a>
+      <a href="json_explorer.html" class="btn btn-outline" style="margin-left: 1rem;">📄 Open JSON Explorer</a>
+    </div>
+
+
+
+    <!-- JSON Upload Section (Initially Hidden) -->
+    <div id="jsonUploadSection" class="json-upload-container" style="display:none;">
+
+      <div class="upload-card">
+        <h2 class="json-title">Upload JSON Data</h2>
+
+        <!-- Raw JSON Textarea -->
+        <textarea id="jsonTextarea" class="json-textarea" placeholder="Paste JSON data here..."></textarea>
+
+        <p class="or-text">or</p>
+
+        <!-- JSON File Upload -->
+        <input type="file" id="jsonFileInput" accept=".json" class="file-input">
+
+        <button id="browseJsonBtn" class="btn btn-outline">Browse JSON File</button>
+
+        <button id="uploadJsonBtn" class="btn btn-primary" style="margin-top: 1rem;">Upload JSON</button>
+
+        <button id="backToFileBtn" class="btn btn-outline" style="margin-top: 1rem;">Back to File Upload</button>
+      </div>
+
+      <!-- JSON Result -->
+      <div id="jsonResult" class="results-card" style="display:none; margin-top:1rem;">
+        <p class="results-title">JSON Upload Result</p>
+        <div id="jsonResultContent" class="results-filename"></div>
+      </div>
+
+    </div>
+
+
+    <!-- Results Area - Narrowest -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

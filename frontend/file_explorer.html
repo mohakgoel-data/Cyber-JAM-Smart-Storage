@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File Explorer – Intelligent Storage System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+
+    <!-- Title -->
+    <div class="title-container">
+      <h1 class="title">File Explorer</h1>
+    </div>
+
+    <!-- Back button -->
+    <div style="width: 100%; max-width: 80rem; margin-bottom: 1rem;">
+      <a href="index.html" class="btn btn-outline">← Back to Upload</a>
+      <a href="json_explorer.html" class="btn btn-outline" style="margin-left: 10px;">JSON Explorer</a>
+
+    </div>
+
+
+    <!-- Explorer Card -->
+    <div class="explorer-container">
+      <div class="upload-card">
+        <div class="explorer-header">
+  <h2 class="explorer-title">Stored Files</h2>
+  <div style="display: flex; gap: 0.5rem;">
+    <input 
+      type="text" 
+      id="searchInput" 
+      placeholder="Search files..." 
+      class="search-box"
+    >
+    <button id="searchBtn" class="btn btn-primary" style="height: 2.5rem;">Search</button>
+    <button id="refreshBtn" class="btn btn-outline" style="height: 2.5rem;">Refresh</button>
+  </div>
+</div>
+
+        <div id="explorerContent" class="explorer-content">
+          <!-- Folder tree + Table area -->
+          <div class="explorer-layout">
+            <!-- Left: Folder Tree -->
+            <div class="folder-tree" id="folderTree">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- Right: File Table -->
+            <div class="file-table-wrapper">
+              <table class="file-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Uploaded</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="fileTableBody">
+                  <tr>
+                    <td colspan="5" style="text-align:center; color: var(--muted-foreground); padding: 1.5rem;">
+                      Select a folder on the left to view files.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div> <!-- explorer-layout -->
+        </div> <!-- explorer-content -->
+      </div> <!-- upload-card -->
+    </div> <!-- explorer-container -->
+  </div>
+  
+  <script src="explorer.js"></script>
+</body>
+</html>

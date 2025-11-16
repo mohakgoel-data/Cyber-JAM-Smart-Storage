@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Explorer – Intelligent Storage System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Title -->
+    <div class="title-container">
+      <h1 class="title">JSON Explorer</h1>
+    </div>
+
+    <!-- Back Button -->
+    <div style="width: 100%; max-width: 80rem; margin-bottom: 1rem;">
+      <a href="index.html" class="btn btn-outline">← Back to Upload</a>
+      <a href="file_explorer.html" class="btn btn-outline" style="margin-left: 10px;">File Explorer</a>
+    </div>
+
+    <!-- Card -->
+    <div class="explorer-container">
+      <div class="upload-card">
+
+        <!-- Search Bar -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+          <input id="searchInput" 
+                 type="text" 
+                 placeholder="Search datasets by ID or name..."
+                 class="search-input"/>
+
+          <button id="searchBtn" class="btn btn-primary" style="width: 9rem;">
+            Search
+          </button>
+        </div>
+
+        <!-- Results Table -->
+        <div class="file-table-wrapper">
+          <table class="file-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="datasetTableBody">
+              <tr>
+                <td colspan="4" style="text-align:center; padding: 1.5rem; color: var(--muted-foreground);">
+                  Search for a dataset above.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- JSON Viewer (initially hidden) -->
+        <div id="jsonViewer" class="json-viewer" style="display: none;">
+          <h3 class="results-title" style="margin-bottom: 0.5rem;">Dataset Preview</h3>
+
+          <!-- Pretty JSON Content -->
+          <pre id="jsonOutput" class="json-output"></pre>
+
+          <!-- Buttons -->
+          <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+            <button id="copyJsonBtn" class="btn btn-outline">Copy JSON</button>
+            <button id="downloadJsonBtn" class="btn btn-primary">Download JSON</button>
+          </div>
+        </div>
+
+      </div> <!-- upload-card -->
+    </div> <!-- explorer-container -->
+
+  </div> <!-- container -->
+
+  <!-- JS file will be added in next step -->
+  <script src="json_explorer.js"></script>
+</body>
+</html>
