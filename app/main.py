@@ -1,3 +1,42 @@
+import subprocess
+import sys
+import pkgutil
+import os
+
+ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
+REQ_PATH = os.path.join(ROOT_DIR, "requirements.txt")
+
+def auto_install_requirements():
+    if not os.path.exists(REQ_PATH):
+        print("⚠️ requirements.txt not found. Skipping auto-install.")
+        return
+
+    print("🔍 Checking required packages...")
+    missing = []
+
+    with open(REQ_PATH, "r") as f:
+        for line in f:
+            pkg = line.strip()
+            if not pkg or pkg.startswith("#"):
+                continue
+
+            module_name = pkg.split("[")[0].replace("-", "_")
+
+            if not pkgutil.find_loader(module_name):
+                missing.append(pkg)
+
+    if missing:
+        print(f"📦 Installing missing packages: {missing}")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install"] + missing)
+            print("✅ Dependencies installed successfully!")
+        except Exception as e:
+            print("❌ Installation error:", e)
+    else:
+        print("✅ All dependencies already installed!")
+
+auto_install_requirements()
+
 from fastapi import FastAPI, UploadFile, File, Depends
 from minio import Minio
 from .utils import get_file_path
@@ -32,7 +71,7 @@ def get_db():
     try:
         db = SessionLocal()
     except Exception as e:
-        raise  # This lets FastAPI show the real exception
+        raise 
     try:
         yield db
     except Exception as e:
@@ -40,8 +79,6 @@ def get_db():
     finally:
         db.close()
 
-
-# MinIO client setup
 minio_client = Minio(
     "localhost:9000",
     access_key="minioadmin",
@@ -51,7 +88,6 @@ minio_client = Minio(
 
 BUCKET = "files"
 
-# Ensure bucket exists
 if not minio_client.bucket_exists(BUCKET):
     minio_client.make_bucket(BUCKET)
 
@@ -66,13 +102,12 @@ async def upload(file: UploadFile = File(...), db: Session = Depends(get_db)):
         except Exception:
             raise HTTPException(400, "Invalid JSON file")
 
-        # Hand over to JSON ingestion engine
         return ingest_json(db, parsed_json, original_name=file.filename)
     
-    content = await file.read()                     # raw bytes
+    content = await file.read()
     object_path = get_file_path(file.filename)
 
-    stream = BytesIO(content)                       # ✔ stream object
+    stream = BytesIO(content)                   
 
     minio_client.put_object(
         bucket_name=BUCKET,
@@ -100,6 +135,7 @@ async def upload(file: UploadFile = File(...), db: Session = Depends(get_db)):
 @app.get("/files", response_model=List[FileMetadataResponse])
 def list_files(db: Session = Depends(get_db)):
     return crud.get_all_files(db)
+
 from typing import Any, Dict, List
 from datetime import datetime
 
@@ -107,7 +143,7 @@ from datetime import datetime
 def get_file_tree(db: Session = Depends(get_db)):
     files = db.query(models.FileMetadata).all()
 
-    tree: Dict[str, Any] = {}  # {category: {subfolder: [files]} or [files]}
+    tree: Dict[str, Any] = {} 
 
     for f in files:
         if not f.stored_path:
@@ -117,11 +153,10 @@ def get_file_tree(db: Session = Depends(get_db)):
         if not parts:
             continue
 
-        category = parts[0]  # e.g. "media", "documents", "code", "json_data", "others"
+        category = parts[0] 
         filename = parts[-1]
         subfolder: str | None = None
 
-        # If path has at least 3 parts → category/subfolder/file
         if len(parts) >= 3:
             subfolder = parts[1]
 
@@ -135,16 +170,13 @@ def get_file_tree(db: Session = Depends(get_db)):
         }
 
         if subfolder:
-            # Ensure category is a dict
             if category not in tree or not isinstance(tree[category], dict):
                 tree[category] = {}
             if subfolder not in tree[category]:
                 tree[category][subfolder] = []
             tree[category][subfolder].append(file_info)
         else:
-            # Category directly contains files
             if category not in tree or isinstance(tree[category], dict):
-                # If it was mistakenly a dict, overwrite with list
                 tree[category] = []
             tree[category].append(file_info)
 
@@ -155,12 +187,9 @@ def get_file_tree(db: Session = Depends(get_db)):
 
 @app.get("/view/{file_id}")
 def view_file(file_id: int, db: Session = Depends(get_db)):
-    # 1. Fetch metadata
     meta = db.query(models.FileMetadata).filter(models.FileMetadata.id == file_id).first()
     if not meta:
         raise HTTPException(status_code=404, detail="File not found")
-
-    # 2. Generate presigned GET URL
     try:
         url = minio_client.presigned_get_object(
             bucket_name=BUCKET,
@@ -169,8 +198,6 @@ def view_file(file_id: int, db: Session = Depends(get_db)):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating presigned URL: {str(e)}")
-
-    # 3. Return URL to frontend
     return {
         "url": url,
         "mime_type": meta.mime_type
@@ -178,16 +205,11 @@ def view_file(file_id: int, db: Session = Depends(get_db)):
 
 @app.get("/download/{file_id}")
 def download_file(file_id: int, db: Session = Depends(get_db)):
-    # 1. Fetch metadata
     meta = db.query(models.FileMetadata).filter(models.FileMetadata.id == file_id).first()
 
     if not meta:
         raise HTTPException(status_code=404, detail="File not found")
-
-    # Extract original name (for download filename)
     original_name = meta.original_name
-
-    # 2. Generate a presigned URL with download headers
     try:
         url = minio_client.presigned_get_object(
             bucket_name=BUCKET,
@@ -200,7 +222,6 @@ def download_file(file_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Could not generate download URL: {str(e)}")
 
-    # 3. Return download link + filename
     return {
         "url": url,
         "filename": original_name
@@ -208,12 +229,11 @@ def download_file(file_id: int, db: Session = Depends(get_db)):
 
 @app.delete("/delete/{file_id}")
 def delete_file(file_id: int, db: Session = Depends(get_db)):
-    # 1. Fetch metadata
     meta = db.query(models.FileMetadata).filter(models.FileMetadata.id == file_id).first()
+
     if not meta:
         raise HTTPException(status_code=404, detail="File not found")
 
-    # 2. Delete file from MinIO
     try:
         minio_client.remove_object(
             bucket_name=BUCKET,
@@ -222,7 +242,6 @@ def delete_file(file_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error removing MinIO object: {str(e)}")
 
-    # 3. Delete from DB
     try:
         db.delete(meta)
         db.commit()
@@ -267,7 +286,6 @@ from sqlalchemy import or_
 @app.get("/json/datasets")
 def list_json_datasets(
     query: str = Query(default=""),
-
     db: Session = Depends(get_db)
 ):
     """
@@ -308,12 +326,10 @@ def search_json_datasets(q: str, db: Session = Depends(get_db)):
 
 @app.get("/json/{dataset_id}")
 def get_json_dataset(dataset_id: int, db: Session = Depends(get_db)):
-    # 1. Get metadata
     meta = crud.get_json_dataset(db, dataset_id)
     if not meta:
         raise HTTPException(404, "Dataset not found")
 
-    # 2. SQL dataset retrieval
     if meta.storage_type == "sql":
         if not meta.sql_table_name:
             raise HTTPException(500, "SQL table missing for dataset")
@@ -324,7 +340,6 @@ def get_json_dataset(dataset_id: int, db: Session = Depends(get_db)):
             "data": data
         }
 
-    # 3. NoSQL dataset retrieval
     if meta.storage_type == "nosql":
         if not meta.mongo_collection_name:
             raise HTTPException(500, "Mongo collection missing for dataset")
@@ -349,13 +364,11 @@ def reset_json_system(db: Session = Depends(get_db)):
     - Clear json_datasets metadata table
     """
 
-    # 1. Fetch all metadata
     datasets = db.query(models.JsonDataset).all()
 
     dropped_sql_tables = []
     dropped_mongo_collections = []
 
-    # --- SQL cleanup ---
     for ds in datasets:
         if ds.storage_type == "sql" and ds.sql_table_name:
             try:
@@ -364,7 +377,7 @@ def reset_json_system(db: Session = Depends(get_db)):
             except Exception as e:
                 print("Error dropping SQL table:", e)
 
-        # --- Mongo cleanup ---
+
         if ds.storage_type == "nosql" and ds.mongo_collection_name:
             try:
                 client = MongoClient("mongodb://localhost:27017/")
@@ -374,7 +387,6 @@ def reset_json_system(db: Session = Depends(get_db)):
             except Exception as e:
                 print("Error dropping Mongo collection:", e)
 
-    # --- Clear metadata table ---
     db.query(models.JsonDataset).delete()
     db.commit()
 
@@ -384,6 +396,7 @@ def reset_json_system(db: Session = Depends(get_db)):
         "dropped_mongo_collections": dropped_mongo_collections,
         "metadata_cleared": True
     }
+
 
 
 
