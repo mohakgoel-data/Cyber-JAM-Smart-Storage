@@ -6,31 +6,24 @@
   <title>Intelligent Storage System</title>
   <meta name="description" content="Upload your files with ease using our modern, minimalist file upload tool">
 
-  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-
-    <!-- ------------------ Title Section ------------------ -->
     <div class="title-container">
       <h1 class="title">Intelligent Storage System</h1>
     </div>
 
-    <!-- ------------------ Upload Area ------------------ -->
     <div class="upload-container">
       <div class="upload-card">
 
-        <!-- Drag and Drop Zone -->
         <div id="dropZone" class="drop-zone">
           <div class="drop-zone-content">
 
-            <!-- Upload Icon -->
             <div id="uploadIcon" class="upload-icon">
               <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
@@ -42,7 +35,6 @@
             <p id="fileNameDisplay" class="file-name">Drag and drop your file here</p>
             <p class="or-text">or</p>
 
-            <!-- Buttons -->
             <div class="button-group">
               <button id="browseBtn" class="btn btn-outline">
                 <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -71,7 +63,6 @@
       </div>
     </div>
 
-    <!-- ------------------ Results Section ------------------ -->
     <div id="resultsContainer" class="results-container" style="display: none;">
       <div class="results-card">
         <div class="results-content">
@@ -91,7 +82,6 @@
               View File <span class="arrow">→</span>
             </a>
 
-            <!-- Collapsible Metadata -->
             <div class="details-container">
               <button id="detailsToggle" class="details-toggle">Details ▼</button>
               <div id="detailsContent" class="details-content">
@@ -108,7 +98,6 @@
       </div>
     </div>
 
-    <!-- ------------------ Switch to JSON Upload ------------------ -->
     <div class="json-switch">
       <button id="showJsonBtn" class="btn btn-outline">Upload JSON instead?</button>
     </div>
@@ -118,32 +107,27 @@
       <a href="json_explorer.html" class="btn btn-outline" style="margin-left: 1rem;">📄 Open JSON Explorer</a>
     </div>
 
-    <!-- ------------------ JSON Upload Section ------------------ -->
     <div id="jsonUploadSection" class="json-upload-container" style="display:none;">
       <div class="upload-card">
         <h2 class="json-title">Upload JSON Data</h2>
 
-        <!-- Raw JSON Textarea -->
         <textarea id="jsonTextarea" class="json-textarea" placeholder="Paste JSON data here..."></textarea>
         <p class="or-text">or</p>
 
-        <!-- JSON File Upload -->
         <input type="file" id="jsonFileInput" accept=".json" class="file-input">
         <button id="browseJsonBtn" class="btn btn-outline">Browse JSON File</button>
         <button id="uploadJsonBtn" class="btn btn-primary" style="margin-top: 1rem;">Upload JSON</button>
         <button id="backToFileBtn" class="btn btn-outline" style="margin-top: 1rem;">Back to File Upload</button>
       </div>
 
-      <!-- JSON Result -->
       <div id="jsonResult" class="results-card" style="display:none; margin-top:1rem;">
         <p class="results-title">JSON Upload Result</p>
         <div id="jsonResultContent" class="results-filename"></div>
       </div>
     </div>
 
-  </div> <!-- End container -->
+  </div> 
 
-  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
